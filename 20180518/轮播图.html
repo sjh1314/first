@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #box{
+            width: 790px;
+            height: 340px;
+            margin: 100px auto;
+            position: relative;
+        }
+        ul{
+            list-style: none;
+            position: absolute;
+            right: 150px;
+            bottom: 20px;
+        }
+        li{
+            float: left;
+            margin-right: 10px;
+            width: 25px;
+            height: 25px;
+            background-color: #999999;
+            text-align: center;
+            line-height: 25px;
+            border-radius: 50%;
+        }
+        ul li:first-of-type{
+            background-color: blue;
+        }
+        span{
+            width: 50px;
+            height: 80px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 35px;
+            text-align: center;
+            line-height: 80px;
+            position: absolute;
+            top: 130px;
+            display: none;
+        }
+        span:first-of-type{
+            left: 0;
+        }
+        span:last-of-type{
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <a href="#"><img id="img" src="0.jpg" alt=""></a>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+    </ul>
+    <span>&lt;</span>
+    <span>&gt;</span>
+</div>
+<!--JS代码-->
+<script>
+    var img = document.getElementById('img'),
+        lis = document.getElementsByTagName('li'),
+        spans = document.getElementsByTagName('span'),
+        adiv = document.getElementById('box'),
+        index = 0,timer;
+//    设置图片转换
+    function changeImg(){
+        img.src = index+'.jpg';
+//    设置小圆的颜色变化
+        for(var i=0;i<lis.length;i++){
+            lis[i].style.background = '#999';
+        }
+        lis[index].style.background = 'blue'
+    }
+    function autoChangeImg(){
+        index++;
+        if(index>7){
+            index = 0;
+        }
+        changeImg()
+    };
+    timer = setInterval(autoChangeImg,1000);
+    adiv.onmouseover = function(){
+        clearInterval(timer);
+        spans[0].style.display = 'block';
+        spans[1].style.display = 'block';
+    };
+    adiv.onmouseout = function(){
+        timer = setInterval(autoChangeImg,1000);
+        spans[0].style.display = 'none';
+        spans[1].style.display = 'none';
+    };
+    for(var i=0;i<lis.length;i++){
+        lis[i].id = i;
+        lis[i].onmouseover = function(){
+            index = this['id'];
+            changeImg();
+        }
+    }
+    spans[0].onclick = function(){
+        index--;
+        if(index<0){
+            index = 7;
+        }
+        changeImg()
+    }
+    spans[1].onclick = function(){
+        index++;
+        if(index>7){
+            index = 0;
+        }
+        changeImg()
+    }
+</script>
+</body>
+</html>
